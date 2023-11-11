@@ -12,7 +12,9 @@ Welcome to my GitHub repository! This repository contains a collection of Postma
 
 - **Clone the Repository:** Start by cloning this repository to your local machine using Git.
 
-- **Import Tests in Postman:** Import the Postman collection into your Postman workspace. Inside the repository, you'll find a file named *GitHub_API_Tests.postman_collection.json*.
+- **Import Collection in Postman:** Import the Postman collection into your Postman workspace. Inside the repository, you'll find a file named *GitHub_API.postman_collection.json*.
+
+- **Import Environment in Postman:** Import the Postman environment into your Postman. Inside the repository, you'll find a file named *GitHub_API.postman_environment.json*.
 
 - **Run the Tests:** Configure the necessary environment variables in Postman, such as your GitHub credentials and repository details.
 
