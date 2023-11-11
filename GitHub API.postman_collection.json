@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "e7563df4-f2de-4859-8da7-69a704570396",
+		"name": "GitHub API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28777952"
+	},
+	"item": [
+		{
+			"name": "List issues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 250ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"issue-number\", response.number);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"owner\": \"{{owner}}\",\r\n    \"repo\": \"{{repo}}\",\r\n    \"title\": \"Issue created vie Postman - {{$isoTimestamp}}\",\r\n    \"body\": \"This is a test issue created via Postaman call.\",\r\n    \"labels\": [],\r\n    \"assignees\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues/{{issue-number}}",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues",
+						"{{issue-number}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an issue - state closed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"owner\": \"{{owner}}\",\r\n    \"repo\": \"{{repo}}\",\r\n    \"issue_number\": \"{{issue-number}}\",\r\n    \"title\": \"Issue updated vie Postman with status closed - {{$isoTimestamp}}\",\r\n    \"body\": \"This is a test issue updated via Postaman call with status closed.\",\r\n    \"state\": \"closed\",\r\n    \"assignees\": [],\r\n    \"labels\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues/{{issue-number}}",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues",
+						"{{issue-number}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an issue - state open",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"owner\": \"{{owner}}\",\r\n    \"repo\": \"{{repo}}\",\r\n    \"issue_number\": \"{{issue-number}}\",\r\n    \"title\": \"Issue updated vie Postman with status open - {{$isoTimestamp}}\",\r\n    \"body\": \"This is a test issue updated via Postaman call with status open.\",\r\n    \"state\": \"open\",\r\n    \"assignees\": [],\r\n    \"labels\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues/{{issue-number}}",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues",
+						"{{issue-number}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lock an issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"owner\": \"{{owner}}\",\r\n    \"repo\": \"{{repo}}\",\r\n    \"issue_number\": \"{{issue-number}}\",\r\n    \"lock_reason\": \"off-topic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues/{{issue-number}}/lock",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues",
+						"{{issue-number}}",
+						"lock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unlock an issue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"owner\": \"{{owner}}\",\r\n    \"repo\": \"{{repo}}\",\r\n    \"issue_number\": \"{{issue-number}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/repos/{{owner}}/{{repo}}/issues/{{issue-number}}/lock",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"repos",
+						"{{owner}}",
+						"{{repo}}",
+						"issues",
+						"{{issue-number}}",
+						"lock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List user account issues assigned to the user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/user/issues?filter=all&state =all",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"user",
+						"issues"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "all",
+							"description": "Can be one of: assigned, created, mentioned, subscribed, repos, all"
+						},
+						{
+							"key": "state ",
+							"value": "all",
+							"description": "Can be one of: open, closed, all"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
